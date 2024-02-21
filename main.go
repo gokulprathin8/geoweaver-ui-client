@@ -45,12 +45,13 @@ func main() {
 	geoweaverLogo := utils.SetGeoweaverLogo()
 	centeredLogo := container.New(layout.NewCenterLayout(), geoweaverLogo)
 
-	startServerBtn := widget.NewButton("Start Geoweaver", utils.StartServer)
+	startServerBtn := widget.NewButton("Start Geoweaver", nil)
 	startServerBtn.Importance = widget.HighImportance
 	startServerBtn.OnTapped = func() {
 		if startServerBtn.Text == "Start Geoweaver" {
 			startServerBtn.SetText("Stop Geoweaver")
 			startServerBtn.Importance = widget.DangerImportance
+			utils.StartServer()
 		} else {
 			startServerBtn.SetText("Start Geoweaver")
 			startServerBtn.Importance = widget.HighImportance
