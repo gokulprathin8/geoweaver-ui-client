@@ -25,15 +25,11 @@ func StartServer() {
 		return
 	}
 
-	// Start the command asynchronously
 	if err := cmd.Start(); err != nil {
 		fmt.Println("Error starting command:", err)
 		return
 	}
 
-	fmt.Println("Starting Server...")
-
-	// Stream stdout
 	go func() {
 		scanner := bufio.NewScanner(stdoutPipe)
 		for scanner.Scan() {
@@ -41,7 +37,6 @@ func StartServer() {
 		}
 	}()
 
-	// Stream stderr
 	go func() {
 		scanner := bufio.NewScanner(stderrPipe)
 		for scanner.Scan() {

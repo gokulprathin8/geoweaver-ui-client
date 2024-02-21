@@ -67,5 +67,4 @@ func main() {
 	window.SetContent(content)
 
 	window.ShowAndRun()
-
 }
