@@ -4,15 +4,15 @@ import (
 	"errors"
 	"image/color"
 
+	"geoweaver-gui-client/utils"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
-
-	"geoweaver-gui-client/utils"
+	"fyne.io/fyne/v2/widget"
 )
 
 type forcedVariant struct {
@@ -33,20 +33,37 @@ func main() {
 	app := app.New()
 	app.Settings().SetTheme(&forcedVariant{Theme: theme.DefaultTheme(), variant: theme.VariantLight})
 	window := app.NewWindow("Geoweaver")
-	window.Canvas().Content().MinSize().Min(fyne.NewSize(800, 800))
+	window.Resize(fyne.NewSize(800, 800))
 
 	// check for java
 	isJavaInstalled := utils.CheckJavaInstallation()
-	if isJavaInstalled {
+	if !isJavaInstalled {
 		errMsg := errors.New("Java is not installed. Please install Java to use to the application. (https://adoptopenjdk.net/releases.html)")
 		dialog.ShowError(errMsg, window)
 	}
 
-	text1 := utils.SetGeoweaverLogo()
-	text2 := canvas.NewText("2", color.Black)
-	text3 := canvas.NewText("3", color.Black)
-	grid := container.New(layout.NewGridLayoutWithColumns(2), text1, text2, text3)
-	window.SetContent(grid)
+	geoweaverLogo := utils.SetGeoweaverLogo()
+	centeredLogo := container.New(layout.NewCenterLayout(), geoweaverLogo)
+
+	startServerBtn := widget.NewButton("Start Geoweaver", utils.StartServer)
+	startServerBtn.Importance = widget.HighImportance
+	startServerBtn.OnTapped = func() {
+		if startServerBtn.Text == "Start Geoweaver" {
+			startServerBtn.SetText("Stop Geoweaver")
+			startServerBtn.Importance = widget.DangerImportance
+		} else {
+			startServerBtn.SetText("Start Geoweaver")
+			startServerBtn.Importance = widget.HighImportance
+		}
+	}
+
+	// Use a vertical box layout to stack the logo and the button
+	content := container.NewVBox(
+		centeredLogo,
+		startServerBtn,
+	)
+
+	window.SetContent(content)
 
 	window.ShowAndRun()
 
