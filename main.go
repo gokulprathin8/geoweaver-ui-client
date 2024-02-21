@@ -9,6 +9,8 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
+
+	"geoweaver-gui-client/utils"
 )
 
 type forcedVariant struct {
@@ -29,7 +31,9 @@ func main() {
 	app := app.New()
 	app.Settings().SetTheme(&forcedVariant{Theme: theme.DefaultTheme(), variant: theme.VariantLight})
 	window := app.NewWindow("Geoweaver")
-	text1 := SetGeoweaverLogo()
+	window.Canvas().Content().MinSize().Min(fyne.NewSize(800, 800))
+
+	text1 := utils.SetGeoweaverLogo()
 	text2 := canvas.NewText("2", color.Black)
 	text3 := canvas.NewText("3", color.Black)
 	grid := container.New(layout.NewGridLayoutWithColumns(2), text1, text2, text3)
