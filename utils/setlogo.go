@@ -13,7 +13,7 @@ func SetGeoweaverLogo() *fyne.Container {
 	LogoHeight := 200
 
 	geoweaverLogo := canvas.NewImageFromFile("../assets/logo.png")
-	logoContainer := container.New(layout.NewFixedGridLayout(fyne.NewSize(float32(LogoWidth), float32(LogoHeight))), geoweaverLogo)
+	logoContainer := container.New(layout.NewGridWrapLayout(fyne.NewSize(float32(LogoWidth), float32(LogoHeight))), geoweaverLogo)
 	return logoContainer
 
 }

@@ -29,12 +29,7 @@ func main() {
 	app := app.New()
 	app.Settings().SetTheme(&forcedVariant{Theme: theme.DefaultTheme(), variant: theme.VariantLight})
 	window := app.NewWindow("Geoweaver")
-
-	logoWidth := 200
-	logoHeight := 200
-	geoweaverLogo := canvas.NewImageFromFile("assets/logo.png")
-	fixedSizeContainer := container.New(layout.NewFixedGridLayout(fyne.NewSize(float32(logoWidth), float32(logoHeight))), geoweaverLogo)
-
+	text1 := SetGeoweaverLogo()
 	text2 := canvas.NewText("2", color.Black)
 	text3 := canvas.NewText("3", color.Black)
 	grid := container.New(layout.NewGridLayoutWithColumns(2), text1, text2, text3)
